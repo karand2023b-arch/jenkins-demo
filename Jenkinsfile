@@ -1,27 +1,33 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/your-repo.git'
+                // Task 15.1: Git commit → Jenkins build
+                git 'https://github.com/karand2023b-arch/jenkins-demo.git'
             }
         }
-
         stage('Compile') {
             steps {
-                bat 'javac Hello.java'
+                // Task 15.2: Compile code
+                bat 'javac Hello.java' 
+            }
+        }
+        stage('Archive') {
+            steps {
+                // Task 15.3: Archive artifacts
+                // This makes the compiled file available for download
+                archiveArtifacts artifacts: '*.class', fingerprint: true 
             }
         }
     }
-
     post {
-        success {
-            archiveArtifacts '*.class'
-            echo 'Build & Archive SUCCESS'
-        }
         failure {
-            echo 'Build FAILED'
+            // Task 15.4: Fail build on error
+            echo 'CI Flow Failed. Please check the compilation logs.'
+        }
+        always {
+            echo 'CI Pipeline execution finished.'
         }
     }
 }
