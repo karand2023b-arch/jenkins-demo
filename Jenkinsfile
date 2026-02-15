@@ -1,18 +1,28 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                bat 'echo Building the project...' 
+                git 'https://github.com/your-username/your-repo.git'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                bat 'javac Hello.java'
             }
         }
     }
+
     post {
         success {
-            echo 'Appropriate message displayed: Build Successful!'
+            archiveArtifacts '*.class'
+            echo 'Build & Archive SUCCESS'
         }
         failure {
-            echo 'Appropriate message displayed: Build Failed!'
+            echo 'Build FAILED'
         }
     }
 }
+
