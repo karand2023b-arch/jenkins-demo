@@ -1,28 +1,18 @@
 pipeline {
     agent any
-
     stages {
         stage('Build') {
             steps {
-                echo 'Building application'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing application'
+                echo 'Building the project...'
             }
         }
     }
-
     post {
         success {
-            echo 'Build SUCCESSFUL'
+            echo 'SUCCESS: The build finished perfectly!' [cite: 109]
         }
         failure {
-            echo 'Build FAILED'
-        }
-        always {
-            echo 'Build finished'
+            echo 'FAILURE: Something went wrong.' [cite: 109]
         }
     }
 }
